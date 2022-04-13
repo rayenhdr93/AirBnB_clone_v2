@@ -1,12 +1,8 @@
 #!/usr/bin/python3
 """State Module for HBNB project."""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Table
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-
-association_table = Table('', Base.metadata,
-                          Column('', ForeignKey('left.id')),
-                          Column('right_id', ForeignKey('right.id')))
 
 
 class Amenity(BaseModel, Base):

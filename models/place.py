@@ -6,11 +6,11 @@ from models import storage
 from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 
-place_amenities = Table('association', Base.metadata,
-                        Column('place_id', String(60),
-                               ForeignKey('places.id'), nullable=False),
-                        Column('amenity_id', String(60),
-                               ForeignKey('amenities.id'), nullable=False))
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'), nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'), nullable=False))
 
 
 class Place(BaseModel, Base):
