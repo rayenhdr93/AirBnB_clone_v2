@@ -6,6 +6,8 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 
 class DBStorage:
+    """This class manages the storage with mysql."""
+
     __engine = None
     __session = None
 

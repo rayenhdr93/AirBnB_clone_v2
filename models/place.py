@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """Place Module for HBNB project."""
+from os import getenv
 from models.base_model import BaseModel, Base
+from models import storage
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel, Base):
@@ -20,4 +23,12 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
+    if getenv("HBNB_TYPE_STORAGE") == 'db':
+        reviews = relationship("Review", backref="place")
+    else:
+        @property
+        def reviews(self):
+            """Get reviews for file storage."""
+            return [review for review in storage.all('Review').values()
+                    if self.id == review.place_id]
     amenity_ids = []
