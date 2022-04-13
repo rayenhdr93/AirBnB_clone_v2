@@ -3,8 +3,14 @@
 from os import getenv
 from models.base_model import BaseModel, Base
 from models import storage
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
+
+place_amenities = Table('association', Base.metadata,
+                        Column('place_id', String(60),
+                               ForeignKey('places.id'), nullable=False),
+                        Column('amenity_id', String(60),
+                               ForeignKey('amenities.id'), nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -23,12 +29,25 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
+    amenity_ids = []
     if getenv("HBNB_TYPE_STORAGE") == 'db':
         reviews = relationship("Review", backref="place")
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                 viewonly=False)
     else:
         @property
         def reviews(self):
             """Get reviews for file storage."""
             return [review for review in storage.all('Review').values()
                     if self.id == review.place_id]
-    amenity_ids = []
+
+        @property
+        def amenities(self):
+            """Get amenities for file storage."""
+            return [amenity for amenity in storage.all('Amenity').values()
+                    if self.id == amenity.place_id]
+
+        @amenities.setter
+        def amenities(self, obj):
+            if obj.__class__.__name__ == "Amenity":
+                self.__class__.amenity_ids.append(obj.id)
