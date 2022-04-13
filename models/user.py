@@ -16,3 +16,7 @@ class User(BaseModel, Base):
     last_name = Column(String(128), nullable=False)
     places = relationship("Place", backref="user")
     reviews = relationship("Review", backref="user")
+
+    def __init__(self, *args, **kwargs):
+        """Initialize model."""
+        super().__init__(*args, **kwargs)

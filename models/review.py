@@ -13,3 +13,7 @@ class Review(BaseModel, Base):
     place_id = Column(String(60), ForeignKey(Place.id), nullable=False)
     user_id = Column(String(60), ForeignKey(User.id), nullable=False)
     text = Column(String(1024), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        """Initialize model."""
+        super().__init__(*args, **kwargs)

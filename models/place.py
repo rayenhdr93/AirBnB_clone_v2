@@ -30,6 +30,11 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
     amenity_ids = []
+
+    def __init__(self, *args, **kwargs):
+        """Initialize model."""
+        super().__init__(*args, **kwargs)
+
     if getenv("HBNB_TYPE_STORAGE") == 'db':
         reviews = relationship("Review", backref="place")
         amenities = relationship("Amenity", secondary="place_amenity",
@@ -44,8 +49,7 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """Get amenities for file storage."""
-            return [amenity for amenity in storage.all('Amenity').values()
-                    if self.id == amenity.place_id]
+            return self.__class__.amenity_ids
 
         @amenities.setter
         def amenities(self, obj):
