@@ -144,9 +144,9 @@ class HBNBCommand(cmd.Cmd):
             if class_nexist(arg):
                 print("** class doesn't exist **")
             else:
+                objs = storage.all(arg)
                 for obj in objs:
-                    if objs[obj].to_dict()['__class__'] == arg:
-                        obj_str.append(str(objs[obj]))
+                    obj_str.append(str(objs[obj]))
                 print(obj_str)
 
     def do_update(self, arg):
