@@ -9,8 +9,8 @@ import models
 class Amenity(BaseModel, Base):
     """Class Representing amenities."""
 
-    from models.place import place_amenity
     if models.storage_t == 'db':
+        from models.place import place_amenity
         __tablename__ = "amenities"
         name = Column(String(128), nullable=False)
         place_amenties = relationship("Place", secondary=place_amenity)
