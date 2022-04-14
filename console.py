@@ -41,9 +41,9 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     arg += value[i]
             return arg
-        elif '.' in value and float(value):
+        elif '.' in value and RepresentsFloat(value):
             return float(value)
-        elif int(value):
+        elif RepresentsInt(value):
             return int(value)
         else:
             return None
@@ -205,6 +205,24 @@ def class_nexist(_class):
     classes = ["BaseModel", "User", "State", "City",
                "Amenity", "Place", "Review"]
     return _class not in classes
+
+
+def RepresentsInt(s):
+    """Check is string can be int."""
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
+def RepresentsFloat(s):
+    """Check is string can be float."""
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 
 
 if __name__ == '__main__':
