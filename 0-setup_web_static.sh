@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# setup web static
 mkdir -p /data/web_static/releases/ 2>/dev/null
 mkdir -p /data/web_static/shared/ 2>/dev/null
 mkdir -p /data/web_static/releases/test/ 2>/dev/null
