@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # setup web static
+sudo apt-get update
+sudo apt-get install nginx
 sudo mkdir -p /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/ 2>/dev/null
 echo "<h1>wow this is a test</h1>" | sudo tee /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test /data/web_static/current
