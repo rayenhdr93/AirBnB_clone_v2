@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # setup web static
-mkdir -p /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/ 2>/dev/null
-echo "<h1>wow this is a test</h1>" > /data/web_static/releases/test/index.html
-ln -sf /data/web_static/releases/test /data/web_static/current
-chown -hR ubuntu:ubuntu /data/
+sudo mkdir -p /data/web_static/releases/ /data/web_static/shared/ /data/web_static/releases/test/ 2>/dev/null
+echo "<h1>wow this is a test</h1>" | sudo tee /data/web_static/releases/test/index.html
+sudo ln -sf /data/web_static/releases/test /data/web_static/current
+sudo chown -hR ubuntu:ubuntu /data/
 config="
 server {
 	listen 80 default_server;
@@ -22,6 +22,6 @@ server {
 	}
 }
 "
-echo -e "$config" > /etc/nginx/sites-available/default
+echo -e "$config" | sudo tee /etc/nginx/sites-available/default
 
-service nginx restart
+sudo service nginx restart
